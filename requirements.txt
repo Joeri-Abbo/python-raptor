@@ -1,3 +1,2 @@
 requests==2.27.1
 selenium==4.3.0
-webdriver==0.7
