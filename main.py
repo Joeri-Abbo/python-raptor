@@ -13,13 +13,13 @@ if __name__ == '__main__':
 
     if styles:
         print('found styles:')
-        # for style in styles:
-        #     print(style)
+        for style in styles:
+            print(style)
 
     if scripts:
         print('found scripts:')
-        # for script in scripts:
-        # print(script)
+        for script in scripts:
+            print(script)
 
     if Wordpress.is_wordpress(scripts, styles):
         print("This site is a wordpress site")
