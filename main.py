@@ -5,7 +5,7 @@ import Classes.Browser as Browser
 if __name__ == '__main__':
     browser = Browser.setup_browser()
     # url = input("Url to send the raptors to: ")
-    url = "https://tracefy.com/nl/"
+    url = "http://localhost/"
     print("Sending raptors to: " + url)
     page = Browser.get_page(browser, url)
     html = Browser.get_html_of_page(page)
