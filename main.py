@@ -6,6 +6,7 @@ if __name__ == '__main__':
     browser = Browser.setup_browser()
     # url = input("Url to send the raptors to: ")
     url = "https://tracefy.com/nl/"
+    print("Sending raptors to: " + url)
     page = Browser.get_page(browser, url)
     html = Browser.get_html_of_page(page)
     styles = Browser.get_styles_of_page(page)
@@ -13,17 +14,17 @@ if __name__ == '__main__':
 
     if styles:
         print('found styles:')
-        for style in styles:
-            print(style)
+        # for style in styles:
+        #     print(style)
 
     if scripts:
         print('found scripts:')
-        for script in scripts:
-            print(script)
+        # for script in scripts:
+        #     print(script)
 
     if WordPress.is_wordpress(scripts, styles):
         print("This site is a wordpress site")
-        WordPress.get_information(url, html, scripts, styles, page)
+        WordPress.get_information(browser, url, html, scripts, styles, page)
 
     # close web browser
     browser.close()
