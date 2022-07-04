@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import Classes.Wordpress as Wordpress
+import Classes.WordPress as WordPress
 import Classes.Browser as Browser
 
 if __name__ == '__main__':
@@ -21,9 +21,9 @@ if __name__ == '__main__':
         for script in scripts:
             print(script)
 
-    if Wordpress.is_wordpress(scripts, styles):
+    if WordPress.is_wordpress(scripts, styles):
         print("This site is a wordpress site")
-        Wordpress.get_information(url, html, scripts, styles, page)
+        WordPress.get_information(url, html, scripts, styles, page)
 
     # close web browser
     browser.close()
