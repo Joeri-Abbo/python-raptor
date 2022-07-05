@@ -22,9 +22,13 @@ if __name__ == '__main__':
         # for script in scripts:
         #     print(script)
 
+    Browser.get_server_settings(url)
     if WordPress.is_wordpress(scripts, styles):
         print("This site is a wordpress site")
         WordPress.get_information(browser, url, html, scripts, styles, page)
+    else:
+        print('Wow, this is not a wordpress')
 
+    print('Done')
     # close web browser
     browser.close()

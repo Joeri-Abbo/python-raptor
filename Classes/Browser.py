@@ -1,4 +1,6 @@
 import time
+
+import requests
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -72,3 +74,13 @@ def check_exists_by_id(browser, id):
     except NoSuchElementException:
         return False
     return True
+
+
+# Get server settings from headers
+def get_server_settings(url):
+    print('🔬 Get server settings')
+    request = requests.head(url)
+    if "Server" in request.headers:
+        print("Server : " + request.headers.get('Server'))
+    if "X-Powered-By" in request.headers:
+        print("Powered by : " + request.headers.get('X-Powered-By'))
