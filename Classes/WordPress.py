@@ -10,7 +10,23 @@ from alive_progress import alive_it
 def get_information(browser, url, html, scripts, styles, page):
     if is_rest_normal(url):
         print('Wordpress default rest api 😈')
+        get_server_settings(url)
+        # get_versions(browser, url, html, scripts, styles, page)
         get_users(browser, url)
+
+
+def get_server_settings(url):
+    print('Get server settings')
+    request = requests.head(url)
+    if "Server" in request.headers:
+        print("Server : " + request.headers.get('Server'))
+    if "X-Powered-By" in request.headers:
+        print("Powered by : " + request.headers.get('X-Powered-By'))
+
+
+def get_versions(browser, url, html, scripts, styles, page):
+    print('Get plugins and theme')
+    # print(scripts)
 
 
 # Get users
@@ -26,6 +42,7 @@ def get_users(browser, url):
             print(user['name'])
             print('Slug/ Username:')
             print(user['slug'])
+            print('====================')
             try_logging_in(browser, url, user['slug'])
 
 
