@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import Classes.WordPress as WordPress
 import Classes.Browser as Browser
+from Classes import Laravel
 
 if __name__ == '__main__':
     browser = Browser.setup_browser()
@@ -11,6 +12,7 @@ if __name__ == '__main__':
     html = Browser.get_html_of_page(page)
     styles = Browser.get_styles_of_page(page)
     scripts = Browser.get_scripts_of_page(page)
+    cookies = page.get_cookies()
 
     if styles:
         print('found styles:')
@@ -23,11 +25,15 @@ if __name__ == '__main__':
         #     print(script)
 
     Browser.get_server_settings(url)
+
     if WordPress.is_wordpress(scripts, styles):
         print("This site is a wordpress site")
-        WordPress.get_information(browser, url, html, scripts, styles, page)
+        WordPress.get_information(browser, url, html, scripts, styles, page, cookies)
+    elif Laravel.is_laravel(cookies, url, scripts, styles):
+        print("This site is a laravel site")
+        Laravel.get_information(browser, url, html, scripts, styles, page, cookies)
     else:
-        print('Wow, this is not a wordpress')
+        print('Wow, this is not a wordpress or laravel site lets try something else')
 
     print('Done')
     # close web browser

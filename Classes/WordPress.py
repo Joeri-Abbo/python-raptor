@@ -7,13 +7,17 @@ from alive_progress import alive_it
 
 
 # Get the information for vulnerabilities or backdoors
-def get_information(browser, url, html, scripts, styles, page):
+def get_information(browser, url, html, scripts, styles, page, cookies):
     if is_rest_normal(url):
         print('Wordpress default rest api 😈')
         # get_versions(browser, url, html, scripts, styles, page)
         get_users(browser, url)
 
+    # Check the theme dir for enabled php logging backdoors
+    # Try finding composer json / package.json for more information
 
+
+# Get versions of plugins
 def get_versions(browser, url, html, scripts, styles, page):
     print('Get plugins and theme')
     # print(scripts)
