@@ -8,13 +8,135 @@ from alive_progress import alive_it
 
 # Get the information for vulnerabilities or backdoors
 def get_information(browser, url, html, scripts, styles, page, cookies):
+    print('🔬 Get information')
+    theme = False
+    try_composer_root(url)
+    theme_url = try_find_theme(styles, scripts)
+    if theme_url:
+        theme = get_theme(theme_url)
+        try_composer_theme(theme_url)
+        try_npm_theme(theme_url)
+
     if is_rest_normal(url):
         print('Wordpress default rest api 😈')
-        # get_versions(browser, url, html, scripts, styles, page)
+        get_versions(browser, url, html, scripts, styles, page)
         get_users(browser, url)
-
+    else:
+        print('Wordpress rest api not default')
     # Check the theme dir for enabled php logging backdoors
     # Try finding composer json / package.json for more information
+
+
+# Check if root has composer.json
+def try_composer_root(url):
+    base_url = Browser.get_base_url(url)
+    url = base_url + "/composer.json"
+    response = requests.get(url)
+    if not response.status_code == 200:
+        return
+
+    print('🔥 Composer root found! Did the developer make a backdoor for me?')
+    print(url)
+
+    url = base_url + "/composer.lock"
+    response = requests.get(url)
+    if not response.status_code == 200:
+        return
+
+    print('🔥 Composer.lock theme found! Did the developer make a backdoor for me?')
+    print(url)
+
+
+def try_composer_theme(base_url):
+    url = base_url + "/composer.json"
+    response = requests.get(url)
+    if not response.status_code == 200:
+        return
+
+    print('🔥 Composer theme found! Did the developer make a backdoor for me?')
+    print(url)
+    url = base_url + "/composer.lock"
+    response = requests.get(url)
+    if not response.status_code == 200:
+        return
+
+    print('🔥 Composer.lock theme found! Did the developer make a backdoor for me?')
+    print(url)
+
+
+def try_npm_theme(base_url):
+    url = base_url + "/package.json"
+
+    response = requests.get(url)
+    if not response.status_code == 200:
+        return
+
+    print('🔥 package.json theme found! Did the developer make a backdoor for me?')
+    print(url)
+
+    url = base_url + "/package-lock.json"
+    response = requests.get(url)
+    if response.status_code == 200:
+        print('🔥 package-lock.json theme found! Did the developer make a backdoor for me?')
+        print(url)
+
+    url = base_url + "/yarn.lock"
+    response = requests.get(url)
+    if response.status_code == 200:
+        print('🔥 yarn.lock theme found! Did the developer make a backdoor for me?')
+        print(url)
+    url = base_url + "/yarn.lock"
+    response = requests.get(url)
+    if response.status_code == 200:
+        print('🔥 yarn.lock theme found! Did the developer make a backdoor for me?')
+        print(url)
+
+    url = base_url + "/pnpm-lock.yaml"
+    response = requests.get(url)
+    if response.status_code == 200:
+        print('🔥 pnpm-lock.yaml theme found! Did the developer make a backdoor for me?')
+        print(url)
+    url = base_url + "/webpack.mix.js"
+    response = requests.get(url)
+    if response.status_code == 200:
+        print('🔥 pnpm-lock.yaml theme found! Did the developer make a backdoor for me?')
+        print(url)
+    url = base_url + "/tailwind.config.js"
+    response = requests.get(url)
+    if response.status_code == 200:
+        print('🔥 pnpm-lock.yaml theme found! Did the developer make a backdoor for me?')
+        print(url)
+
+    exit()
+
+
+# Try to find theme by using scripts / styles
+def try_find_theme(styles, scripts):
+    if styles or scripts:
+        if scripts:
+            for script in scripts:
+                if "/themes/" in script:
+                    return get_theme_url(script)
+        if styles:
+            for style in styles:
+                if "/themes/" in style:
+                    return get_theme_url(style)
+    return False
+
+
+# get the theme url
+def get_theme_url(url):
+    print('🔥 Theme found!')
+    url = url.partition('/themes/')[0] + '/themes/' + url.partition('/themes/')[2].partition('/')[0]
+    print(url)
+    return url
+
+
+# Get the theme
+def get_theme(url):
+    theme = url.partition('/themes/')[2]
+    print(theme)
+    return theme
 
 
 # Get versions of plugins
@@ -38,6 +160,8 @@ def get_users(browser, url):
             print(user['slug'])
             print('====================')
             try_logging_in(browser, url, user['slug'])
+    else:
+        print('No users found someone is hiding routes.')
 
 
 # Try logging in to WordPress
@@ -73,11 +197,12 @@ def get_users_of_rest(url):
 
 # Is the rest endpoint default
 def is_rest_normal(url):
-    response = requests.get(Browser.get_base_url(url) + "/wp-json")
+    url = Browser.get_base_url(url) + "/wp-json/wp/v2/"
+    response = requests.get(url)
     if not response.status_code == 200:
         return False
     data = response.json()
-    if "name" in data and "_links" in data:
+    if "routes" in data and "_links" in data:
         return True
 
 
