@@ -30,84 +30,35 @@ def get_information(browser, url, html, scripts, styles, page, cookies):
 # Check if root has composer.json
 def try_composer_root(url):
     base_url = Browser.get_base_url(url)
-    url = base_url + "/composer.json"
-    response = requests.get(url)
-    if not response.status_code == 200:
-        return
 
-    print('🔥 Composer root found! Did the developer make a backdoor for me?')
-    print(url)
-
-    url = base_url + "/composer.lock"
-    response = requests.get(url)
-    if not response.status_code == 200:
-        return
-
-    print('🔥 Composer.lock theme found! Did the developer make a backdoor for me?')
-    print(url)
+    file_exists_on_url(base_url, "composer.json")
+    file_exists_on_url(base_url, "composer.lock")
 
 
+# Try composer files.
 def try_composer_theme(base_url):
-    url = base_url + "/composer.json"
-    response = requests.get(url)
-    if not response.status_code == 200:
-        return
-
-    print('🔥 Composer theme found! Did the developer make a backdoor for me?')
-    print(url)
-    url = base_url + "/composer.lock"
-    response = requests.get(url)
-    if not response.status_code == 200:
-        return
-
-    print('🔥 Composer.lock theme found! Did the developer make a backdoor for me?')
-    print(url)
+    file_exists_on_url(base_url, "composer.json")
+    file_exists_on_url(base_url, "composer.lock")
 
 
+# Try npm files
 def try_npm_theme(base_url):
-    url = base_url + "/package.json"
-
-    response = requests.get(url)
-    if not response.status_code == 200:
-        return
-
-    print('🔥 package.json theme found! Did the developer make a backdoor for me?')
-    print(url)
-
-    url = base_url + "/package-lock.json"
-    response = requests.get(url)
-    if response.status_code == 200:
-        print('🔥 package-lock.json theme found! Did the developer make a backdoor for me?')
-        print(url)
-
-    url = base_url + "/yarn.lock"
-    response = requests.get(url)
-    if response.status_code == 200:
-        print('🔥 yarn.lock theme found! Did the developer make a backdoor for me?')
-        print(url)
-    url = base_url + "/yarn.lock"
-    response = requests.get(url)
-    if response.status_code == 200:
-        print('🔥 yarn.lock theme found! Did the developer make a backdoor for me?')
-        print(url)
-
-    url = base_url + "/pnpm-lock.yaml"
-    response = requests.get(url)
-    if response.status_code == 200:
-        print('🔥 pnpm-lock.yaml theme found! Did the developer make a backdoor for me?')
-        print(url)
-    url = base_url + "/webpack.mix.js"
-    response = requests.get(url)
-    if response.status_code == 200:
-        print('🔥 pnpm-lock.yaml theme found! Did the developer make a backdoor for me?')
-        print(url)
-    url = base_url + "/tailwind.config.js"
-    response = requests.get(url)
-    if response.status_code == 200:
-        print('🔥 pnpm-lock.yaml theme found! Did the developer make a backdoor for me?')
-        print(url)
-
+    file_exists_on_url(base_url, "package.json")
+    file_exists_on_url(base_url, "package-lock.json")
+    file_exists_on_url(base_url, "yarn.lock")
+    file_exists_on_url(base_url, "pnpm-lock.yaml")
+    file_exists_on_url(base_url, "webpack.mix.js")
+    file_exists_on_url(base_url, "tailwind.config.js")
     exit()
+
+
+# Check if file exists in folder
+def file_exists_on_url(url, file):
+    url = url + '/' + file
+    response = requests.get(url)
+    if response.status_code == 200:
+        print('🔥 ' + file + ' found! Did the developer make a backdoor for me?')
+        print(url)
 
 
 # Try to find theme by using scripts / styles
