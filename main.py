@@ -10,9 +10,18 @@ if __name__ == '__main__':
     else:
         with_login = False
 
+    url = False
+    if sys.argv:
+        for arg in sys.argv:
+            if 'u=' in arg:
+                url = arg[2:]
+
+    if not url:
+        # url = input("Url to send the raptors to: ")
+        url = "http://localhost/"
+
     browser = Browser.setup_browser()
-    # url = input("Url to send the raptors to: ")
-    url = "http://localhost/"
+
     print("Sending raptors to: " + url)
     page = Browser.get_page(browser, url)
     html = Browser.get_html_of_page(page)
