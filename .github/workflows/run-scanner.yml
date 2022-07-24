@@ -23,5 +23,5 @@ jobs:
         run: pip install pipenv
       - name: Install dependencies
         run: pipenv install
-      - name:
+      - name: Value
         run: echo ${{ github.event.inputs.deployment_prefix }}
