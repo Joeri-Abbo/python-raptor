@@ -26,10 +26,9 @@ def get_information(browser, url, html, scripts, styles, page, cookies):
         get_users(browser, url)
     else:
         print('Wordpress rest api not default')
-    # Check the theme dir for enabled php logging backdoors
-    # Try finding composer json / package.json for more information
 
 
+# Get theme information of style.css
 def get_theme_information(theme_url):
     response = requests.get(theme_url + '/style.css')
     if response.status_code == 200:
