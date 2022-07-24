@@ -23,5 +23,5 @@ jobs:
         run: pip install pipenv
       - name: Install dependencies
         run: pipenv install
-      - name: Value
-        run: echo ${{ github.event.inputs.url }}
+      - name: Scan
+        run: ./main.py u=${{ github.event.inputs.url }}
