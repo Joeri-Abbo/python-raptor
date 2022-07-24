@@ -7,7 +7,7 @@ import os
 if __name__ == '__main__':
     items = []
     for url in sys.argv:
-        if url.startswith("."):
+        if url.startswith(".") or url.startswith('vulnerabilities-s'):
             continue
         items.append(url)
 
