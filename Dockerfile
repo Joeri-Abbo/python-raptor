@@ -21,9 +21,6 @@ RUN apk add chromium
 # upgrade pip
 RUN pip install --upgrade pip
 
-# install selenium
-RUN pip install selenium
-
 WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
