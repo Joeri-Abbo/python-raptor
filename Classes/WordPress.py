@@ -2,6 +2,7 @@ from time import sleep
 from selenium.webdriver.common.by import By
 import os
 import Classes.Browser as Browser
+import Classes.Helper as Helper
 import requests
 from alive_progress import alive_it
 
@@ -9,24 +10,24 @@ from alive_progress import alive_it
 # Get the information for vulnerabilities or backdoors
 def get_information(with_login, browser, url, html, scripts, styles, page, cookies):
     print('🔬 Get information')
-    base_url = Browser.get_base_url(url)
+    base_url = Helper.get_base_url(url)
     theme = False
     try_composer_root(base_url)
     theme_url = try_find_theme(styles, scripts)
     if theme_url:
-        line_breaker()
+        Helper.line_breaker()
         theme = get_theme(theme_url)
         try_composer_theme(theme_url)
         try_npm_theme(theme_url)
         get_theme_information(theme_url)
-        line_breaker()
+        Helper.line_breaker()
 
-    line_breaker()
+    Helper.line_breaker()
     print('Try trigger PHP errors')
     if theme_url:
-        try_trigger_php_error(theme_url)
-    try_trigger_php_error(base_url + '/wp-cron.php')
-    line_breaker()
+        Helper.try_trigger_php_error(theme_url)
+    Helper.try_trigger_php_error(base_url + '/wp-cron.php')
+    Helper.line_breaker()
 
     if is_rest_normal(url):
         print('Wordpress default rest api 😈')
@@ -34,14 +35,6 @@ def get_information(with_login, browser, url, html, scripts, styles, page, cooki
         get_users(with_login, browser, url)
     else:
         print('Wordpress rest api not default')
-
-
-# Try triggering php errors
-def try_trigger_php_error(url):
-    response = requests.get(url)
-    if response.status_code == 500:
-        print('🔥 PHP error triggered!')
-        print(url)
 
 
 # Get theme information of style.css
@@ -60,35 +53,26 @@ def get_theme_information(theme_url):
 
 # Check if root has composer.json
 def try_composer_root(url):
-    base_url = Browser.get_base_url(url)
+    base_url = Helper.get_base_url(url)
 
-    file_exists_on_url(base_url, "composer.json")
-    file_exists_on_url(base_url, "composer.lock")
+    Helper.file_exists_on_url(base_url, "composer.json")
+    Helper.file_exists_on_url(base_url, "composer.lock")
 
 
 # Try composer files.
 def try_composer_theme(base_url):
-    file_exists_on_url(base_url, "composer.json")
-    file_exists_on_url(base_url, "composer.lock")
+    Helper.file_exists_on_url(base_url, "composer.json")
+    Helper.file_exists_on_url(base_url, "composer.lock")
 
 
 # Try npm files
 def try_npm_theme(base_url):
-    file_exists_on_url(base_url, "package.json")
-    file_exists_on_url(base_url, "package-lock.json")
-    file_exists_on_url(base_url, "yarn.lock")
-    file_exists_on_url(base_url, "pnpm-lock.yaml")
-    file_exists_on_url(base_url, "webpack.mix.js")
-    file_exists_on_url(base_url, "tailwind.config.js")
-
-
-# Check if file exists in folder
-def file_exists_on_url(url, file):
-    url = url + '/' + file
-    response = requests.get(url)
-    if response.status_code == 200:
-        print('🔥 ' + file + ' found! Did the developer make a backdoor for me?')
-        print(url)
+    Helper.file_exists_on_url(base_url, "package.json")
+    Helper.file_exists_on_url(base_url, "package-lock.json")
+    Helper.file_exists_on_url(base_url, "yarn.lock")
+    Helper.file_exists_on_url(base_url, "pnpm-lock.yaml")
+    Helper.file_exists_on_url(base_url, "webpack.mix.js")
+    Helper.file_exists_on_url(base_url, "tailwind.config.js")
 
 
 # Try to find theme by using scripts / styles
@@ -132,14 +116,14 @@ def get_users(with_login, browser, url):
     if users and with_login:
         print('found users:')
         for user in users:
-            line_breaker()
+            Helper.line_breaker()
             print('ID:')
             print(user['id'])
             print('Name:')
             print(user['name'])
             print('Slug/ Username:')
             print(user['slug'])
-            line_breaker()
+            Helper.line_breaker()
             try_logging_in(browser, url, user['slug'])
     else:
         print('No users found someone is hiding routes.')
@@ -147,7 +131,7 @@ def get_users(with_login, browser, url):
 
 # Try logging in to WordPress
 def try_logging_in(browser, url, username):
-    browser.get(Browser.get_base_url(url) + "/wp-login.php")
+    browser.get(Helper.get_base_url(url) + "/wp-login.php")
     sleep(2)
     browser.find_element(By.ID, "user_login").send_keys(username)
     with open(os.path.abspath(os.getcwd()) + "/passwords.txt") as f_in:
@@ -170,7 +154,7 @@ def try_logging_in(browser, url, username):
 
 # Get users of rest
 def get_users_of_rest(url):
-    response = requests.get(Browser.get_base_url(url) + "/wp-json/wp/v2/users")
+    response = requests.get(Helper.get_base_url(url) + "/wp-json/wp/v2/users")
     if not response.status_code == 200:
         return False
     return response.json()
@@ -178,7 +162,7 @@ def get_users_of_rest(url):
 
 # Is the rest endpoint default
 def is_rest_normal(url):
-    url = Browser.get_base_url(url) + "/wp-json/wp/v2/"
+    url = Helper.get_base_url(url) + "/wp-json/wp/v2/"
     response = requests.get(url)
     if not response.status_code == 200:
         return False
@@ -199,11 +183,11 @@ def is_wordpress(cookies, url, scripts, styles):
                 if is_wordpress_asset(style):
                     return True
 
-        login_url = requests.get(Browser.get_base_url(url) + '/wp-login.php')
+        login_url = requests.get(Helper.get_base_url(url) + '/wp-login.php')
         if login_url.status_code == 200:
             if 'wp-login.php' in login_url.url:
                 return True
-        admin_url = requests.get(Browser.get_base_url(url) + '/admin')
+        admin_url = requests.get(Helper.get_base_url(url) + '/admin')
         if admin_url.status_code == 200:
             if 'wp-login.php' in admin_url.url:
                 return True
@@ -217,7 +201,3 @@ def is_wordpress_asset(url):
         return True
     else:
         return False
-
-
-def line_breaker():
-    print('============================================================')

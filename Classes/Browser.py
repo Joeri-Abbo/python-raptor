@@ -61,12 +61,6 @@ def get_styles_of_page(page):
     return urls
 
 
-# Get base url
-def get_base_url(url):
-    base_url_object = urlparse(url)
-    return base_url_object.scheme + "://" + base_url_object.netloc
-
-
 # Check if id exist in page
 def check_exists_by_id(browser, id):
     try:
