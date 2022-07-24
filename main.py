@@ -2,6 +2,7 @@
 import Classes.WordPress as WordPress
 import Classes.Browser as Browser
 import Classes.Laravel as Laravel
+import Classes.Helper as Helper
 import sys
 
 if __name__ == '__main__':
@@ -28,6 +29,11 @@ if __name__ == '__main__':
     styles = Browser.get_styles_of_page(page)
     scripts = Browser.get_scripts_of_page(page)
     cookies = page.get_cookies()
+
+    Helper.line_breaker()
+    print('🔬 Check for readme\'s')
+    Helper.check_readme_files(Helper.get_base_url(url))
+    Helper.line_breaker()
 
     if styles:
         print('found styles:')

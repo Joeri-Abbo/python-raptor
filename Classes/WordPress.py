@@ -50,6 +50,8 @@ def get_theme_information(theme_url):
     else:
         print('No default style.css found')
 
+    Helper.check_readme_files(theme_url + '/')
+
 
 # Check if root has composer.json
 def try_composer_root(url):

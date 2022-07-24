@@ -29,3 +29,14 @@ def file_exists_on_url(url, file):
 # Just place a linebreak
 def line_breaker():
     print('============================================================')
+
+
+# Check if a readme variant exist on the url
+def check_readme_files(url):
+    readme_files = ['readme.txt', 'readme.md', 'readme.html', 'readme.htm', 'readme.php', 'readme.xml', 'readme.json',
+                    'readme.yml', 'phtml']
+    for file in readme_files:
+        response = requests.get(url + '/' + file)
+        if response.status_code == 200 and response.url == url + '/' + file:
+            print('🔥 Readme file found!')
+            print(url + '/' + file)
