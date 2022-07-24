@@ -24,4 +24,4 @@ jobs:
       - name: Install datetime
         run: pip install datetime
       - name: Scan
-        run: python vulnerabilities-scanner.py u=${{ github.event.inputs.urls }}
+        run: python vulnerabilities-scanner.py ${{ github.event.inputs.urls }}
