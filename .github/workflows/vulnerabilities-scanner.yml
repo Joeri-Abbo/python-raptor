@@ -1,4 +1,4 @@
-name: Run scanner
+name: vulnerabilities scanner
 on:
   workflow_dispatch:
     inputs:
