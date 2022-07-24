@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     Browser.get_server_settings(url)
 
-    if WordPress.is_wordpress(scripts, styles):
+    if WordPress.is_wordpress(cookies, url, scripts, styles):
         print("This site is a wordpress site")
         WordPress.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
     elif Laravel.is_laravel(cookies, url, scripts, styles):

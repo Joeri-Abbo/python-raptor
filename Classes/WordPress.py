@@ -188,8 +188,7 @@ def is_rest_normal(url):
 
 
 # Are given assets from a wordpress
-def is_wordpress(scripts, styles):
-    is_a_wordpress = False
+def is_wordpress(cookies, url, scripts, styles):
     if styles or scripts:
         if scripts:
             for script in scripts:
@@ -200,7 +199,16 @@ def is_wordpress(scripts, styles):
                 if is_wordpress_asset(style):
                     return True
 
-    return is_a_wordpress
+        login_url = requests.get(Browser.get_base_url(url) + '/wp-login.php')
+        if login_url.status_code == 200:
+            if 'wp-login.php' in login_url.url:
+                return True
+        admin_url = requests.get(Browser.get_base_url(url) + '/admin')
+        if admin_url.status_code == 200:
+            if 'wp-login.php' in admin_url.url:
+                return True
+
+    return False
 
 
 # Is given asset a wordpress url
