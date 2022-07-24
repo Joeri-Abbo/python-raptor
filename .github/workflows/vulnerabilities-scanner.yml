@@ -26,5 +26,6 @@ jobs:
       - name: Install snyk
         run: |
           npm install snyk -g
+          snyk auth ${{secrets.SNYK_TOKEN}}}
       - name: Scan
         run: python vulnerabilities-scanner.py ${{ github.event.inputs.urls }}
