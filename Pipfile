@@ -10,7 +10,6 @@ requests = "*"
 alive-progress = "*"
 datetime = "*"
 wget = "*"
-os = "*"
 
 [dev-packages]
 
