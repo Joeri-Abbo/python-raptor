@@ -17,8 +17,8 @@ if __name__ == '__main__':
                 url = arg[2:]
 
     if not url:
-        # url = input("Url to send the raptors to: ")
-        url = "http://localhost/"
+        url = input("Url to send the raptors to: ")
+        # url = "http://localhost/"
 
     browser = Browser.setup_browser()
 

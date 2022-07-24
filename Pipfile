@@ -8,6 +8,9 @@ selenium = "*"
 webdriver-manager = "*"
 requests = "*"
 alive-progress = "*"
+datetime = "*"
+wget = "*"
+os = "*"
 
 [dev-packages]
 
