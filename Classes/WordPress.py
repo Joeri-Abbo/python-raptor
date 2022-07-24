@@ -13,9 +13,12 @@ def get_information(browser, url, html, scripts, styles, page, cookies):
     try_composer_root(url)
     theme_url = try_find_theme(styles, scripts)
     if theme_url:
+        line_breaker()
         theme = get_theme(theme_url)
         try_composer_theme(theme_url)
         try_npm_theme(theme_url)
+        get_theme_information(theme_url)
+        line_breaker()
 
     if is_rest_normal(url):
         print('Wordpress default rest api 😈')
@@ -25,6 +28,19 @@ def get_information(browser, url, html, scripts, styles, page, cookies):
         print('Wordpress rest api not default')
     # Check the theme dir for enabled php logging backdoors
     # Try finding composer json / package.json for more information
+
+
+def get_theme_information(theme_url):
+    response = requests.get(theme_url + '/style.css')
+    if response.status_code == 200:
+        print('Default style.css file found in theme, dumping information')
+        for line in response.text.splitlines():
+            for value in ['Theme Name', 'Theme URI', 'Author', 'Description', 'Requires at least', 'Tested up to',
+                          'Requires PHP', 'Version']:
+                if value in line:
+                    print(line)
+    else:
+        print('No default style.css found')
 
 
 # Check if root has composer.json
@@ -49,7 +65,6 @@ def try_npm_theme(base_url):
     file_exists_on_url(base_url, "pnpm-lock.yaml")
     file_exists_on_url(base_url, "webpack.mix.js")
     file_exists_on_url(base_url, "tailwind.config.js")
-    exit()
 
 
 # Check if file exists in folder
@@ -86,7 +101,7 @@ def get_theme_url(url):
 # Get the theme
 def get_theme(url):
     theme = url.partition('/themes/')[2]
-    print(theme)
+    print('Theme name:' + theme)
     return theme
 
 
@@ -102,14 +117,14 @@ def get_users(browser, url):
     if users:
         print('found users:')
         for user in users:
-            print('====================')
+            line_breaker()
             print('ID:')
             print(user['id'])
             print('Name:')
             print(user['name'])
             print('Slug/ Username:')
             print(user['slug'])
-            print('====================')
+            line_breaker()
             try_logging_in(browser, url, user['slug'])
     else:
         print('No users found someone is hiding routes.')
@@ -179,3 +194,7 @@ def is_wordpress_asset(url):
         return True
     else:
         return False
+
+
+def line_breaker():
+    print('====================')
