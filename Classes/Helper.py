@@ -50,3 +50,13 @@ def check_files_exists(url, files):
         if response.status_code == 200 and response.url == url + '/' + file:
             print('🔥 ' + file + ' found!')
             print(url + '/' + file)
+
+
+# yes or no input
+def yes_or_no(question):
+    while "the answer is invalid":
+        reply = str(input(question + ' (y/n): ')).lower().strip()
+        if reply[0] == 'y':
+            return True
+        if reply[0] == 'n':
+            return False
