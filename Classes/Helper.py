@@ -35,8 +35,19 @@ def line_breaker():
 def check_readme_files(url):
     readme_files = ['readme.txt', 'readme.md', 'readme.html', 'readme.htm', 'readme.php', 'readme.xml', 'readme.json',
                     'readme.yml', 'phtml']
-    for file in readme_files:
+    check_files_exists(url, readme_files)
+
+
+# Check if a readme variant exist on the url
+def check_docker_files(url):
+    docker_files = ['docker-compose.yml', 'docker-compose.yaml', 'docker-compose.json', 'Dockerfile']
+    check_files_exists(url, docker_files)
+
+
+# Check if file exist
+def check_files_exists(url, files):
+    for file in files:
         response = requests.get(url + '/' + file)
         if response.status_code == 200 and response.url == url + '/' + file:
-            print('🔥 Readme file found!')
+            print('🔥 ' + file + ' found!')
             print(url + '/' + file)

@@ -35,6 +35,8 @@ if __name__ == '__main__':
     Helper.check_readme_files(Helper.get_base_url(url))
     Helper.line_breaker()
 
+    Helper.check_docker_files(Helper.get_base_url(url))
+
     if styles:
         print('found styles:')
         # for style in styles:
