@@ -19,9 +19,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-      - name: Install pipenv
-        run: pip install pipenv
-      - name: Install dependencies
-        run: pipenv install
+      - name: Install selenium
+        run: pip install selenium
+      - name: Install webdriver-manager
+        run: pip install webdriver-manager
+      - name: Install requests
+        run: pip install requests
+      - name: Install requests
+        run: pip install alive-progress
+
       - name: Scan
-        run: ./main.py u=${{ github.event.inputs.url }}
+        run: python main.py u=${{ github.event.inputs.url }}
