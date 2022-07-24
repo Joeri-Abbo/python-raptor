@@ -9,8 +9,9 @@ from alive_progress import alive_it
 # Get the information for vulnerabilities or backdoors
 def get_information(with_login, browser, url, html, scripts, styles, page, cookies):
     print('🔬 Get information')
+    base_url = Browser.get_base_url(url)
     theme = False
-    try_composer_root(url)
+    try_composer_root(base_url)
     theme_url = try_find_theme(styles, scripts)
     if theme_url:
         line_breaker()
@@ -20,12 +21,27 @@ def get_information(with_login, browser, url, html, scripts, styles, page, cooki
         get_theme_information(theme_url)
         line_breaker()
 
+    line_breaker()
+    print('Try trigger PHP errors')
+    if theme_url:
+        try_trigger_php_error(theme_url)
+    try_trigger_php_error(base_url + '/wp-cron.php')
+    line_breaker()
+
     if is_rest_normal(url):
         print('Wordpress default rest api 😈')
         get_versions(browser, url, html, scripts, styles, page)
         get_users(with_login, browser, url)
     else:
         print('Wordpress rest api not default')
+
+
+# Try triggering php errors
+def try_trigger_php_error(url):
+    response = requests.get(url)
+    if response.status_code == 500:
+        print('🔥 PHP error triggered!')
+        print(url)
 
 
 # Get theme information of style.css
@@ -196,4 +212,4 @@ def is_wordpress_asset(url):
 
 
 def line_breaker():
-    print('====================')
+    print('============================================================')
