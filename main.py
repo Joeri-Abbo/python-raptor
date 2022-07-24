@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 import Classes.WordPress as WordPress
 import Classes.Browser as Browser
-from Classes import Laravel
+import Classes.Laravel as Laravel
+import sys
 
 if __name__ == '__main__':
+    if 'withLogin' in sys.argv:
+        with_login = True
+    else:
+        with_login = False
+
     browser = Browser.setup_browser()
     # url = input("Url to send the raptors to: ")
     url = "http://localhost/"
@@ -28,10 +34,10 @@ if __name__ == '__main__':
 
     if WordPress.is_wordpress(scripts, styles):
         print("This site is a wordpress site")
-        WordPress.get_information(browser, url, html, scripts, styles, page, cookies)
+        WordPress.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
     elif Laravel.is_laravel(cookies, url, scripts, styles):
         print("This site is a laravel site")
-        Laravel.get_information(browser, url, html, scripts, styles, page, cookies)
+        Laravel.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
     else:
         print('Wow, this is not a wordpress or laravel site lets try something else')
 

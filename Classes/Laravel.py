@@ -21,5 +21,5 @@ def is_laravel(cookies, url, scripts, styles):
     return False
 
 
-def get_information(browser, url, html, scripts, styles, page, cookies):
+def get_information(with_login, browser, url, html, scripts, styles, page, cookies):
     print('🔬 Get information')

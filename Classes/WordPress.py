@@ -7,7 +7,7 @@ from alive_progress import alive_it
 
 
 # Get the information for vulnerabilities or backdoors
-def get_information(browser, url, html, scripts, styles, page, cookies):
+def get_information(with_login, browser, url, html, scripts, styles, page, cookies):
     print('🔬 Get information')
     theme = False
     try_composer_root(url)
@@ -23,7 +23,7 @@ def get_information(browser, url, html, scripts, styles, page, cookies):
     if is_rest_normal(url):
         print('Wordpress default rest api 😈')
         get_versions(browser, url, html, scripts, styles, page)
-        get_users(browser, url)
+        get_users(with_login, browser, url)
     else:
         print('Wordpress rest api not default')
 
@@ -111,9 +111,9 @@ def get_versions(browser, url, html, scripts, styles, page):
 
 
 # Get users
-def get_users(browser, url):
+def get_users(with_login, browser, url):
     users = get_users_of_rest(url)
-    if users:
+    if users and with_login:
         print('found users:')
         for user in users:
             line_breaker()
