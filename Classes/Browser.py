@@ -10,10 +10,17 @@ from selenium.webdriver.common.by import By
 
 
 # Setup browser
-def setup_browser():
+def setup_browser(with_browser, proxy_server):
     chrome_options = Options()
-    chrome_options.add_argument("--headless")
+
     chrome_options.add_argument("--window-size=1920,1200")
+
+    if not with_browser:
+        chrome_options.add_argument("--headless")
+
+    if proxy_server:
+        chrome_options.add_argument('--proxy-server=%s' % proxy_server)
+
     # start web browser
     browser = webdriver.Chrome(
         service=Service(ChromeDriverManager().install()),

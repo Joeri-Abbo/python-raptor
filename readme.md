@@ -11,7 +11,7 @@ Supported frameworks:
 
 #### Scan a site commandos
 
-Run default command
+Run default command the supports multiple arguments
 
 ```commandline
 ./main.py
@@ -23,10 +23,20 @@ Run command with login brute force
 ./main.py withLogin
 ```
 
+```commandline
+./main.py withBrowser
+```
+
 Set url by arg
 
 ```commandline
 ./main.py u=localhost
+```
+
+Set proxy server ip
+
+```commandline
+./main.py p=127.0.0.1
 ```
 
 #### Scan composer / npm lock files.

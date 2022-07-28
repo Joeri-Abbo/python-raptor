@@ -6,10 +6,14 @@ import Classes.Helper as Helper
 import sys
 
 if __name__ == '__main__':
+    with_login = False
+    with_browser = False
+
+    if 'withBrowser' in sys.argv:
+        with_browser = True
+
     if 'withLogin' in sys.argv:
         with_login = True
-    else:
-        with_login = False
 
     url = False
     if sys.argv:
@@ -19,9 +23,20 @@ if __name__ == '__main__':
 
     if not url:
         url = input("Url to send the raptors to: ")
-        # url = "http://localhost/"
 
-    browser = Browser.setup_browser()
+    proxy_server = False
+    if sys.argv:
+        for arg in sys.argv:
+            if 'p=' in arg:
+                proxy_server = arg[2:]
+    if proxy_server:
+        if not proxy_server:
+            if Helper.yes_or_no("No proxy server provided. Do you want to use a proxy server?"):
+                proxy_server = input("Proxy server: ")
+                if not proxy_server:
+                    proxy_server = False
+
+    browser = Browser.setup_browser(with_browser, proxy_server)
 
     print("Sending raptors to: " + url)
     page = Browser.get_page(browser, url)
