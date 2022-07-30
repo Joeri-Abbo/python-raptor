@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
-
-import Classes.Snyk as snyk
+from Classes import Snyk
 
 if __name__ == '__main__':
     items = []
@@ -9,4 +8,4 @@ if __name__ == '__main__':
         if url.startswith(".") or url.startswith('vulnerabilities-s'):
             continue
         items.append(url)
-    snyk.scan(items)
+    Snyk.scan(items)

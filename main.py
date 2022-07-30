@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
-import Classes.Frameworks.WordPress as WordPress
-import Classes.Browser as Browser
-import Classes.Frameworks.Laravel as Laravel
-import Classes.Frameworks.Drupal as Drupal
-import Classes.Frameworks.NoFramework as NoFramework
-import Classes.Helper as Helper
-import Classes.BaseInformation as BaseInformation
 import sys
-
-from Classes import Scraper
+from Classes import Helper, Browser, BaseInformation, Scraper
+from Classes.Frameworks import WordPress, Laravel, Drupal, NoFramework
 
 if __name__ == '__main__':
     with_login = with_browser = with_scraper = False

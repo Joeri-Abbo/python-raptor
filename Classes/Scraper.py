@@ -1,7 +1,7 @@
 import os
 from urllib.parse import urlparse
 import datetime
-import Classes.Helper as Helper
+from Classes import Helper
 import requests
 from bs4 import BeautifulSoup
 

@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 import requests
 import sys
-import Classes.Snyk as Snyk
+from Classes import Snyk
 
 
 # Get base url
@@ -41,7 +41,7 @@ def get_line_breaker():
 # Check if a readme variant exist on the url
 def check_readme_files(url):
     readme_files = ['readme.txt', 'readme.md', 'readme.html', 'readme.htm', 'readme.php', 'readme.xml', 'readme.json',
-                    'readme.yml', 'phtml']
+                    'readme.yml', 'readme.phtml']
     check_files_exists(url, readme_files)
 
 
@@ -114,3 +114,14 @@ def get_url_arg():
         url = input("Url to scan: ")
 
     return url
+
+
+# Check sitemap url
+def get_sitemap(url):
+    url = get_base_url(url)
+    for file in ['sitemap.xml', 'sitemap.xml.gz']:
+        response = requests.get(url + '/' + file)
+        if response.status_code == 200:
+            print('🔥 Sitemap found!')
+            print(response.url)
+            return response.url

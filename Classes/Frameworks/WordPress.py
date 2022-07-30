@@ -1,8 +1,7 @@
 from time import sleep
 from selenium.webdriver.common.by import By
 import os
-import Classes.Browser as Browser
-import Classes.Helper as Helper
+from Classes import Browser, Helper
 import requests
 from alive_progress import alive_it
 
@@ -12,6 +11,8 @@ def get_information(with_login, browser, url, html, scripts, styles, page, cooki
     print("This site is a wordpress site")
     print('🔬 Get information')
     theme_url = try_find_theme(styles, scripts)
+    sitemap_url = Helper.get_sitemap(url)
+
     if theme_url:
         Helper.line_breaker()
         theme = get_theme(theme_url)
