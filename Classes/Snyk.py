@@ -17,7 +17,8 @@ def download_file(url, file):
 
 # make the work dir
 def make_work_dir():
-    os.mkdir(get_work_dir())
+    if not os.path.exists(get_work_dir()):
+        os.mkdir(get_work_dir())
 
 
 # run the real snyk test command

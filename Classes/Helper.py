@@ -1,6 +1,7 @@
 from urllib.parse import urlparse
 import requests
 import sys
+import Classes.Snyk as Snyk
 
 
 # Get base url
@@ -24,6 +25,8 @@ def file_exists_on_url(url, file):
     if response.status_code == 200:
         print('🔥 ' + file + ' found! Did the developer make a backdoor for me?')
         print(url)
+        return True
+    return False
 
 
 # Just place a linebreak
@@ -69,18 +72,28 @@ def yes_or_no(question):
 
 # Check if root has composer.json
 def try_composer(url):
-    file_exists_on_url(url, "composer.json")
-    file_exists_on_url(url, "composer.lock")
+    composer = file_exists_on_url(url, "composer.json")
+    lock = file_exists_on_url(url, "composer.lock")
+    if composer and lock and yes_or_no('Want to try scanning for vulnerabilities?'):
+        Snyk.scan([url + '/composer.json', url + '/composer.lock'])
 
 
 # Try npm files
 def try_npm(url):
-    file_exists_on_url(url, "package.json")
-    file_exists_on_url(url, "package-lock.json")
-    file_exists_on_url(url, "yarn.lock")
-    file_exists_on_url(url, "pnpm-lock.yaml")
+    items = []
+    package_json = file_exists_on_url(url, "package.json")
+    if file_exists_on_url(url, "package-lock.json"):
+        items.append(url + "/package-lock.json")
+    if file_exists_on_url(url, "yarn.lock"):
+        items.append(url + "/yarn.lock")
+    if file_exists_on_url(url, "pnpm-lock.yaml"):
+        items.append(url + "/pnpm-lock.yaml")
     file_exists_on_url(url, "webpack.mix.js")
     file_exists_on_url(url, "tailwind.config.js")
+    if package_json and items and yes_or_no('Want to try scanning for vulnerabilities?'):
+        print('🔥 Scanning for vulnerabilities...')
+        items.append(url + "/package.json")
+        Snyk.scan(items)
 
 
 # Try robots.txt
