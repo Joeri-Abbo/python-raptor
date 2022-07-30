@@ -11,6 +11,8 @@ def get_information(with_login, browser, url, html, scripts, styles, page, cooki
     print("This site is a wordpress site")
     print('🔬 Get information')
     theme_url = try_find_theme(styles, scripts)
+
+    # TODO Use sitemap to get post_types?
     sitemap_url = Helper.get_sitemap(url)
 
     if theme_url:
