@@ -83,6 +83,13 @@ def try_npm(url):
     file_exists_on_url(url, "tailwind.config.js")
 
 
+# Try robots.txt
+def try_robot(url):
+    file_exists_on_url(url, "robot.txt")
+    file_exists_on_url(url, "robots.txt")
+
+
+# Get url arg
 def get_url_arg():
     url = False
     if sys.argv:

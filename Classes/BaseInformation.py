@@ -11,3 +11,4 @@ def getInformation(url):
     Helper.line_breaker()
     Helper.try_composer(Helper.get_base_url(url))
     Helper.try_npm(Helper.get_base_url(url))
+    Helper.try_robot(Helper.get_base_url(url))
