@@ -9,6 +9,7 @@ from alive_progress import alive_it
 
 # Get the information for vulnerabilities or backdoors
 def get_information(with_login, browser, url, html, scripts, styles, page, cookies):
+    print("This site is a wordpress site")
     print('🔬 Get information')
     theme_url = try_find_theme(styles, scripts)
     if theme_url:

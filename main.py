@@ -2,6 +2,7 @@
 import Classes.Frameworks.WordPress as WordPress
 import Classes.Browser as Browser
 import Classes.Frameworks.Laravel as Laravel
+import Classes.Frameworks.Drupal as Drupal
 import Classes.Frameworks.NoFramework as NoFramework
 import Classes.Helper as Helper
 import Classes.BaseInformation as BaseInformation
@@ -47,10 +48,10 @@ if __name__ == '__main__':
     BaseInformation.getInformation(url)
 
     if WordPress.is_wordpress(cookies, url, scripts, styles):
-        print("This site is a wordpress site")
         WordPress.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
+    elif Drupal.is_drupal(cookies, url, scripts, styles):
+        Drupal.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
     elif Laravel.is_laravel(cookies, url, scripts, styles):
-        print("This site is a laravel site")
         Laravel.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
     else:
         NoFramework.get_information(with_login, browser, url, html, scripts, styles, page, cookies)

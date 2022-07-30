@@ -28,6 +28,7 @@ def is_laravel(cookies, url, scripts, styles):
 
 
 def get_information(with_login, browser, url, html, scripts, styles, page, cookies):
+    print("This site is a laravel site")
     print('🔬 Get information')
     login_url = get_login_url(url)
     print('Login url: ' + login_url)
