@@ -7,24 +7,21 @@ import Classes.Helper as Helper
 import Classes.BaseInformation as BaseInformation
 import sys
 
+from Classes import Scraper
+
 if __name__ == '__main__':
-    with_login = False
-    with_browser = False
+    with_login = with_browser = with_scraper = False
 
     if 'withBrowser' in sys.argv:
         with_browser = True
 
+    if 'withScraper' in sys.argv:
+        with_scraper = True
+
     if 'withLogin' in sys.argv:
         with_login = True
 
-    url = False
-    if sys.argv:
-        for arg in sys.argv:
-            if 'u=' in arg:
-                url = arg[2:]
-
-    if not url:
-        url = input("Url to send the raptors to: ")
+    url = Helper.get_url_arg()
 
     proxy_server = False
     if sys.argv:
@@ -58,6 +55,8 @@ if __name__ == '__main__':
     else:
         NoFramework.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
 
+    if with_scraper:
+        Scraper.run(url)
     print('Done')
     # close web browser
     browser.close()

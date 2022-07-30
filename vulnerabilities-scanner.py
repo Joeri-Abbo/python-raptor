@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 
-import Classes.snyk as snyk
+import Classes.Snyk as snyk
 
 if __name__ == '__main__':
     items = []

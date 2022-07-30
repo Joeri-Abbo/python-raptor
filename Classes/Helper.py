@@ -1,5 +1,6 @@
 from urllib.parse import urlparse
 import requests
+import sys
 
 
 # Get base url
@@ -27,7 +28,11 @@ def file_exists_on_url(url, file):
 
 # Just place a linebreak
 def line_breaker():
-    print('============================================================')
+    print(get_line_breaker())
+
+
+def get_line_breaker():
+    return '============================================================'
 
 
 # Check if a readme variant exist on the url
@@ -76,3 +81,16 @@ def try_npm(url):
     file_exists_on_url(url, "pnpm-lock.yaml")
     file_exists_on_url(url, "webpack.mix.js")
     file_exists_on_url(url, "tailwind.config.js")
+
+
+def get_url_arg():
+    url = False
+    if sys.argv:
+        for arg in sys.argv:
+            if 'u=' in arg:
+                url = arg[2:]
+
+    if not url:
+        url = input("Url to scan: ")
+
+    return url

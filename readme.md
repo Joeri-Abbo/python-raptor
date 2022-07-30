@@ -22,9 +22,15 @@ Run command with login brute force
 ```commandline
 ./main.py withLogin
 ```
-
+Run command with browser 
 ```commandline
 ./main.py withBrowser
+``````
+
+Run command with scraper
+
+```commandline
+./main.py withScraper
 ```
 
 Set url by arg
@@ -51,4 +57,18 @@ run `snyk auth` to authenticate .
 
 ```commandline
 ./vulnerabilities-scanner.py https://localhost/package.json https://localhost/yarn.lock
+```
+
+#### scrape website
+
+Scrape the given url and save the result to a file inside _scraper folder.
+
+```commandline
+./scraper.py
+```
+
+With url argument
+
+```commandline
+./scraper.py u=https://localhost
 ```
