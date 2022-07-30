@@ -72,3 +72,7 @@ With url argument
 ```commandline
 ./scraper.py u=https://localhost
 ```
+
+
+# Disclaimer    
+Only use this tool for research purposes and with permission from the owner of the site.
