@@ -60,3 +60,19 @@ def yes_or_no(question):
             return True
         if reply[0] == 'n':
             return False
+
+
+# Check if root has composer.json
+def try_composer(url):
+    file_exists_on_url(url, "composer.json")
+    file_exists_on_url(url, "composer.lock")
+
+
+# Try npm files
+def try_npm(url):
+    file_exists_on_url(url, "package.json")
+    file_exists_on_url(url, "package-lock.json")
+    file_exists_on_url(url, "yarn.lock")
+    file_exists_on_url(url, "pnpm-lock.yaml")
+    file_exists_on_url(url, "webpack.mix.js")
+    file_exists_on_url(url, "tailwind.config.js")

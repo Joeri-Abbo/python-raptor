@@ -30,6 +30,7 @@ def is_laravel(cookies, url, scripts, styles):
 def get_information(with_login, browser, url, html, scripts, styles, page, cookies):
     print('🔬 Get information')
     login_url = get_login_url(url)
+    print('Login url: ' + login_url)
     if login_url and Helper.yes_or_no('Try login with username and password?'):
         try_login(login_url, browser)
         print('🔐 Login required')

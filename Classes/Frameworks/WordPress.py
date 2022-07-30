@@ -10,15 +10,12 @@ from alive_progress import alive_it
 # Get the information for vulnerabilities or backdoors
 def get_information(with_login, browser, url, html, scripts, styles, page, cookies):
     print('🔬 Get information')
-    base_url = Helper.get_base_url(url)
-    theme = False
-    try_composer_root(base_url)
     theme_url = try_find_theme(styles, scripts)
     if theme_url:
         Helper.line_breaker()
         theme = get_theme(theme_url)
-        try_composer_theme(theme_url)
-        try_npm_theme(theme_url)
+        Helper.try_composer(theme_url)
+        Helper.try_npm(theme_url)
         get_theme_information(theme_url)
         Helper.line_breaker()
 
@@ -26,7 +23,7 @@ def get_information(with_login, browser, url, html, scripts, styles, page, cooki
     print('Try trigger PHP errors')
     if theme_url:
         Helper.try_trigger_php_error(theme_url)
-    Helper.try_trigger_php_error(base_url + '/wp-cron.php')
+    Helper.try_trigger_php_error(Helper.get_base_url(url) + '/wp-cron.php')
     Helper.line_breaker()
 
     if is_rest_normal(url):
@@ -51,30 +48,6 @@ def get_theme_information(theme_url):
         print('No default style.css found')
 
     Helper.check_readme_files(theme_url + '/')
-
-
-# Check if root has composer.json
-def try_composer_root(url):
-    base_url = Helper.get_base_url(url)
-
-    Helper.file_exists_on_url(base_url, "composer.json")
-    Helper.file_exists_on_url(base_url, "composer.lock")
-
-
-# Try composer files.
-def try_composer_theme(base_url):
-    Helper.file_exists_on_url(base_url, "composer.json")
-    Helper.file_exists_on_url(base_url, "composer.lock")
-
-
-# Try npm files
-def try_npm_theme(base_url):
-    Helper.file_exists_on_url(base_url, "package.json")
-    Helper.file_exists_on_url(base_url, "package-lock.json")
-    Helper.file_exists_on_url(base_url, "yarn.lock")
-    Helper.file_exists_on_url(base_url, "pnpm-lock.yaml")
-    Helper.file_exists_on_url(base_url, "webpack.mix.js")
-    Helper.file_exists_on_url(base_url, "tailwind.config.js")
 
 
 # Try to find theme by using scripts / styles

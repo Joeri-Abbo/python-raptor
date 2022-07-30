@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-import Classes.WordPress as WordPress
+import Classes.Frameworks.WordPress as WordPress
 import Classes.Browser as Browser
-import Classes.Laravel as Laravel
+import Classes.Frameworks.Laravel as Laravel
+import Classes.Frameworks.NoFramework as NoFramework
 import Classes.Helper as Helper
+import Classes.BaseInformation as BaseInformation
 import sys
 
 if __name__ == '__main__':
@@ -45,24 +47,7 @@ if __name__ == '__main__':
     scripts = Browser.get_scripts_of_page(page)
     cookies = page.get_cookies()
 
-    Helper.line_breaker()
-    print('🔬 Check for readme\'s')
-    Helper.check_readme_files(Helper.get_base_url(url))
-    Helper.line_breaker()
-
-    Helper.check_docker_files(Helper.get_base_url(url))
-
-    if styles:
-        print('found styles:')
-        # for style in styles:
-        #     print(style)
-
-    if scripts:
-        print('found scripts:')
-        # for script in scripts:
-        #     print(script)
-
-    Browser.get_server_settings(url)
+    BaseInformation.getInformation(url)
 
     if WordPress.is_wordpress(cookies, url, scripts, styles):
         print("This site is a wordpress site")
@@ -71,7 +56,7 @@ if __name__ == '__main__':
         print("This site is a laravel site")
         Laravel.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
     else:
-        print('Wow, this is not a wordpress or laravel site lets try something else')
+        NoFramework.get_information(with_login, browser, url, html, scripts, styles, page, cookies)
 
     print('Done')
     # close web browser
