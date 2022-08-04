@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from Classes import Helper
+from classes import Helper
 
 
 def get_information(with_login, browser, url, html, scripts, styles, page, cookies):

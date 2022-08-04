@@ -1,4 +1,4 @@
-from Classes import Helper, Browser
+from classes import Helper, Browser
 
 
 def getInformation(url):

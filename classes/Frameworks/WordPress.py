@@ -1,7 +1,7 @@
 from time import sleep
 from selenium.webdriver.common.by import By
 import os
-from Classes import Browser, Helper
+from classes import Browser, Helper
 import requests
 from alive_progress import alive_it
 

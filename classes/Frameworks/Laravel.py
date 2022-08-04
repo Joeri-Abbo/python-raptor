@@ -1,5 +1,5 @@
 from time import sleep
-from Classes import Helper
+from classes import Helper
 from selenium.webdriver.common.by import By
 import os
 import requests

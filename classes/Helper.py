@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 import requests
 import sys
-from Classes import Snyk
+from classes import Snyk
 
 
 # Get base url

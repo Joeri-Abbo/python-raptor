@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
-from Classes import Helper, Browser, BaseInformation, Scraper
-from Classes.Frameworks import WordPress, Laravel, Drupal, NoFramework
+from classes import Helper, Browser, BaseInformation, Scraper
+from classes.Frameworks import WordPress, Laravel, Drupal, NoFramework
 
 if __name__ == '__main__':
     with_login = with_browser = with_scraper = False
