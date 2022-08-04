@@ -74,7 +74,7 @@ def yes_or_no(question):
 def try_composer(url):
     composer = file_exists_on_url(url, "composer.json")
     lock = file_exists_on_url(url, "composer.lock")
-    if composer and lock and yes_or_no('Want to try scanning for vulnerabilities?'):
+    if composer and lock:
         Snyk.scan([url + '/composer.json', url + '/composer.lock'])
 
 
@@ -90,7 +90,7 @@ def try_npm(url):
         items.append(url + "/pnpm-lock.yaml")
     file_exists_on_url(url, "webpack.mix.js")
     file_exists_on_url(url, "tailwind.config.js")
-    if package_json and items and yes_or_no('Want to try scanning for vulnerabilities?'):
+    if package_json and items:
         print('🔥 Scanning for vulnerabilities...')
         items.append(url + "/package.json")
         Snyk.scan(items)

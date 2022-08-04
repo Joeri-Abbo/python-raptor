@@ -92,7 +92,9 @@ def get_versions(browser, url, html, scripts, styles, page):
 # Get users
 def get_users(with_login, browser, url):
     users = get_users_of_rest(url)
-    if users and with_login:
+    print(users)
+    exit('je;')
+    if users:
         print('found users:')
         for user in users:
             Helper.line_breaker()
@@ -103,7 +105,8 @@ def get_users(with_login, browser, url):
             print('Slug/ Username:')
             print(user['slug'])
             Helper.line_breaker()
-            try_logging_in(browser, url, user['slug'])
+            if with_login:
+                try_logging_in(browser, url, user['slug'])
     else:
         print('No users found someone is hiding routes.')
 
@@ -146,7 +149,7 @@ def is_rest_normal(url):
     if not response.status_code == 200:
         return False
     data = response.json()
-    if "routes" in data and "_links" in data:
+    if "_links" in data:
         return True
 
 
