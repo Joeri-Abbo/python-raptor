@@ -8,7 +8,7 @@
 -i https://pypi.org/simple
 alive-progress==3.1.5
 async-generator==1.10; python_version >= '3.5'
-attrs==23.1.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+attrs==23.2.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 certifi==2023.11.17; python_version >= '3.6'
 cffi==1.16.0
 charset-normalizer==3.3.2; python_version >= '3.6'
