@@ -22,7 +22,7 @@ pycparser==2.21
 pyopenssl==24.0.0
 pysocks==1.7.1
 python-dotenv==1.0.1; python_version >= '3.5'
-pytz==2023.3.post1
+pytz==2024.1
 requests==2.31.0
 selenium==4.17.2
 setuptools==69.0.3; python_full_version >= '3.7.0'
