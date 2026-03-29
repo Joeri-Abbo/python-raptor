@@ -1,29 +1,46 @@
 "[JSON]":
-  - "**/*.json"
+  - changed-files:
+    - any-glob-to-any-file: "**/*.json"
+
 "[YML]":
-  - "**/*.yml"
+  - changed-files:
+    - any-glob-to-any-file: "**/*.yml"
+
 "[PHP]":
-  - "**/*.php"
+  - changed-files:
+    - any-glob-to-any-file: "**/*.php"
+
 "[Javascript]":
-  - "**/*.js"
+  - changed-files:
+    - any-glob-to-any-file: "**/*.js"
+
 "[blade]":
-  - "**/*.blade.php"
+  - changed-files:
+    - any-glob-to-any-file: "**/*.blade.php"
+
 "[Markdown]":
-  - "**/*.md"
+  - changed-files:
+    - any-glob-to-any-file: "**/*.md"
 
 "[Python]":
-  - "**/*.py"
+  - changed-files:
+    - any-glob-to-any-file: "**/*.py"
 
 "<Documentation>":
-  - "**/*.md"
-  - doc/**/*
-  - doxygen_doc/**/*
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/*.md"
+      - "doc/**/*"
+      - "doxygen_doc/**/*"
 
 "Code: Tooling":
-  - .github/**/*
+  - changed-files:
+    - any-glob-to-any-file: ".github/**/*"
 
 "Code: Tests":
-  - tests/**/*
+  - changed-files:
+    - any-glob-to-any-file: "tests/**/*"
 
 "Models":
-  - "**/Models/**"
+  - changed-files:
+    - any-glob-to-any-file: "**/Models/**"
