@@ -1,4 +1,5 @@
 /geckodriver.log
 /.idea
 /_work/
-/_scraper/
+/_scraper/.venv/
+__pycache__/
